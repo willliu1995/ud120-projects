@@ -1,10 +1,15 @@
 #!/usr/bin/python
-
+import os
+import sys
 import matplotlib.pyplot as plt
-from prep_terrain_data import makeTerrainData
-from class_vis import prettyPicture
 
-features_train, labels_train, features_test, labels_test = makeTerrainData()
+sys.path.append(os.getcwd())
+sys.path.insert(0, "./choose_your_own")
+from choose_your_own.prep_terrain_data import makeTerrainData
+from choose_your_own.class_vis import prettyPicture
+from sklearn import neighbors
+
+(features_train, labels_train, features_test, labels_test) = makeTerrainData()
 
 
 ### the training data (features_train, labels_train) have both "fast" and "slow"
@@ -26,17 +31,14 @@ plt.xlabel("bumpiness")
 plt.ylabel("grade")
 plt.show()
 ################################################################################
-
-
 ### your code here!  name your classifier object clf if you want the 
 ### visualization code (prettyPicture) to show you the decision boundary
 
+print("training model...")
+clf = neighbors.KNeighborsClassifier(n_neighbors=4)
+clf.fit(features_train, labels_train)
 
-
-
-
-
-
+print(clf.score(features_test, labels_test))
 
 try:
     prettyPicture(clf, features_test, labels_test)
