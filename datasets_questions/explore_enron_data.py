@@ -18,6 +18,7 @@
 import os
 import sys
 import pickle
+import numpy as np
 import pandas as pd
 sys.path.append(os.getcwd)
 sys.path.insert(0, "./final_project")
@@ -27,6 +28,7 @@ enron_data = pickle.load(
     open("./final_project/final_project_dataset_unix.pkl", "rb"))
 
 enron_df = pd.DataFrame.from_dict(enron_data, orient='index')
+enron_df = enron_df.replace("NaN", np.nan)
 enron_df = enron_df.reset_index()
 
 #%%
@@ -80,3 +82,11 @@ enron_df[enron_df['index'].str.find("COLWELL WESLEY") == 0]['from_this_person_to
 #%%
 # Jeffrey Skilling的股票期权价值
 enron_df[enron_df['index'].str.find("SKILLING JEFFREY") == 0]['exercised_stock_options']
+
+#%%
+# CEO, CFO和主席（创始人）分别拿了多少钱
+enron_df[enron_df['index'].str.contains(r"SKILLING|FASTOW|LAY") == True][["index", "total_payments"]]
+
+#%%
+# POI的薪酬缺失
+enron_df[enron_df['poi'] == True].info()
