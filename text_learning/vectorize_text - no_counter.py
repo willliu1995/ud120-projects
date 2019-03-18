@@ -54,7 +54,7 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
 
         ### use str.replace() to remove any instances of the words
         ### ["sara", "shackleton", "chris", "germani"]
-        for n in ["sara", "shackleton", "chris", "germani"]:
+        for n in ["sara", "shackleton", "chris", "germani", "sshacklensf", "cgermannsf"]:
             words = words.replace(n, "")
 
         ### append the text to word_data
@@ -79,23 +79,24 @@ pickle.dump(from_data, open("./text_learning/your_email_authors.pkl", "wb"))
 #%%
 print(word_data[152])
 
-
-
-
 #%%
 ### in Part 4, do TfIdf vectorization here
 sw = stopwords.words("english")
 transformed_frq = TfidfVectorizer(stop_words="english")
-x = transformed_frq.fit_transform(word_data)
+transformed_frq_1 = transformed_frq .fit(word_data)
+x =transformed_frq.fit_transform(word_data)
 print(type(transformed_frq))
 
 #%%
-tfidf_list = transformed_frq.get_feature_names()
+tfidf_list = transformed_frq_1.get_feature_names()
 print(len(set(tfidf_list)))
 print(len(tfidf_list))
 
 # print(tfidf_list)
 #%%
 print(tfidf_list[34597])
+print(tfidf_list[33614])
+print(tfidf_list[33613])
+print(tfidf_list[14343])
 
 
